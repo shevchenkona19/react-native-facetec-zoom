@@ -42,6 +42,11 @@ public class EnrollmentProcessor extends Processor implements ZoomFaceMapProcess
             public void onError() {
                 sessionTokenErrorCallback.onError("EnrollmentProcessor");
             }
+
+            @Override
+            public void onError(String msg) {
+                sessionTokenErrorCallback.onError("EnrollmentProcessor ERROR: " + msg);
+            }
         });
     }
 

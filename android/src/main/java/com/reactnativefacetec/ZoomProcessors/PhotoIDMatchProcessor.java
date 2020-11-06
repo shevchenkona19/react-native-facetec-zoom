@@ -57,6 +57,11 @@ public class PhotoIDMatchProcessor extends Processor implements ZoomFaceMapProce
             public void onError() {
                 sessionTokenErrorCallback.onError("PhotoIDMatchProcessor");
             }
+
+            @Override
+            public void onError(String msg) {
+                sessionTokenErrorCallback.onError("PhotoIDMatchProcessor ERROR: " + msg);
+            }
         });
     }
 

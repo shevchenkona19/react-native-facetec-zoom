@@ -89,6 +89,7 @@ public class NetworkingHelpers {
     interface SessionTokenCallback {
         void onResponse(String sessionToken);
         void onError();
+        void onError(String msg);
     }
 
     public static void getSessionToken(final SessionTokenCallback sessionTokenCallback) {
@@ -108,7 +109,7 @@ public class NetworkingHelpers {
 
                 // If this comes from HTTPS cancel call, don't set the sub code to NETWORK_ERROR.
                 if(!e.getMessage().equals(OK_HTTP_RESPONSE_CANCELED)) {
-                    sessionTokenCallback.onError();
+                    sessionTokenCallback.onError(e.getMessage());
                 }
             }
 
@@ -122,13 +123,13 @@ public class NetworkingHelpers {
                         sessionTokenCallback.onResponse(responseJSON.getJSONObject("data").getString("sessionToken"));
                     }
                     else {
-                        sessionTokenCallback.onError();
+                        sessionTokenCallback.onError("Parse response error: " + responseJSON.toString());
                     }
                 }
                 catch(JSONException e) {
                     e.printStackTrace();
                     Log.d("ZoomSDK", "Exception raised while attempting to parse JSON result.");
-                    sessionTokenCallback.onError();
+                    sessionTokenCallback.onError("Exception raised while attempting to parse JSON result.");
                 }
             }
         });

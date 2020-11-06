@@ -38,6 +38,11 @@ public class AuthenticateProcessor extends Processor implements ZoomFaceMapProce
             public void onError() {
                 sessionTokenErrorCallback.onError("AuthenticateProcessor");
             }
+
+            @Override
+            public void onError(String msg) {
+                sessionTokenErrorCallback.onError("AuthenticateProcessor ERROR: " + msg);
+            }
         });
     }
 

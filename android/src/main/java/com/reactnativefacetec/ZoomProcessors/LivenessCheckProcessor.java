@@ -36,6 +36,11 @@ public class LivenessCheckProcessor extends Processor implements ZoomFaceMapProc
             public void onError() {
                 sessionTokenErrorCallback.onError("LivenessCheckProcessor");
             }
+
+            @Override
+            public void onError(String msg) {
+                sessionTokenErrorCallback.onError("ERROR: " + msg);
+            }
         });
     }
 
