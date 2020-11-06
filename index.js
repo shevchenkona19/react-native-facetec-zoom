@@ -74,5 +74,27 @@ const wrapNative = native => {
   }
 }
 
-const zoomAuth = wrapNative(NativeModules.RNReactNativeZoomSdk)
-export default zoomAuth
+let toExport;
+if (Platform.OS === "android") {
+  const {Facetec} = NativeModules;
+  toExport = {
+    init: (deviceKey, onSuccess, onFail) => {
+      Facetec.Init(deviceKey, onSuccess, onFail);
+    },
+    authenticateUser: (id, onSuccess, onFail) => {
+      Facetec.AuthenticateUser(id, onSuccess, onFail);
+    },
+    enroll: (id, onSuccess, onFail) => {
+      Facetec.Enroll(id, onSuccess, onFail);
+    },
+    livenessCheck: (onSuccess, onFail) => {
+      Facetec.LivenessCheck(onSuccess, onFail);
+    },
+    CheckId: (id, onSuccess, onFail) => {
+      Facetec.CheckId(id, onSuccess, onFail);
+    },
+  }
+} else if (Platform.OS === "ios") {
+toExport = wrapNative(NativeModules.RNReactNativeZoomSdk);
+}
+export default toExport
